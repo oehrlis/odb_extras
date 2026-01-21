@@ -4,6 +4,7 @@ description: OraDBA extras extension for user-specific tools (gnu-tar, oci cli, 
 author: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 enabled: true
 priority: 60
+uses_oradba_libs: false
 provides:
   bin: true
   sql: false
