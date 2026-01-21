@@ -60,6 +60,7 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           RELEASE_NOTES_FILE="doc/release_notes/v${VERSION}.md"
+          EXTENSION_NAME="$(grep '^name:' .extension | awk '{print $2}')"
           
           # Check if detailed release notes exist
           if [ -f "$RELEASE_NOTES_FILE" ]; then
@@ -68,9 +69,9 @@ jobs:
           else
             echo "Release notes file not found, generating generic notes"
             cat > release_notes.md <<EOF
-          # OraDBA Extension Template v${VERSION}
+          # OraDBA Extension ${EXTENSION_NAME} v${VERSION}
 
-          Extension template for creating OraDBA extensions.
+          Extension for OraDBA providing additional functionality.
 
           ## What's Changed
 
@@ -78,30 +79,32 @@ jobs:
 
           ## Assets
 
-          - **extension-template-${VERSION}.tar.gz**: Extension template tarball
-          - **extension-template-${VERSION}.tar.gz.sha256**: Checksum file
+          - **${EXTENSION_NAME}-${VERSION}.tar.gz**: Extension tarball
+          - **${EXTENSION_NAME}-${VERSION}.tar.gz.sha256**: Checksum file
 
           ## Installation
 
           \`\`\`bash
-          # Extract tarball
-          tar xzf extension-template-${VERSION}.tar.gz
-          cd extension-template
+          # Download and verify
+          wget https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${EXTENSION_NAME}-${VERSION}.tar.gz
+          wget https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${EXTENSION_NAME}-${VERSION}.tar.gz.sha256
+          sha256sum -c ${EXTENSION_NAME}-${VERSION}.tar.gz.sha256
 
-          # Install to OraDBA
-          make install
+          # Extract to OraDBA
+          tar xzf ${EXTENSION_NAME}-${VERSION}.tar.gz -C \\\${ORADBA_LOCAL_BASE}/
+
+          # Reload OraDBA environment
+          source \\\${ORADBA_BASE}/bin/oradba.sh
           \`\`\`
 
           ## Documentation
 
           - [Main Documentation](https://github.com/${{ github.repository }}/blob/main/doc/index.md)
-          - [Installation Guide](https://github.com/${{ github.repository }}/blob/main/doc/installation.md)
-          - [Configuration](https://github.com/${{ github.repository }}/blob/main/doc/configuration.md)
-          - [Development](https://github.com/${{ github.repository }}/blob/main/doc/development.md)
+          - [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
 
           ## Usage
 
-          Extract the tarball into \\\${ORADBA_LOCAL_BASE} and adjust metadata/configs as needed.
+          Extract the tarball into \\\${ORADBA_LOCAL_BASE} and adjust configuration as needed.
           EOF
           fi
 
