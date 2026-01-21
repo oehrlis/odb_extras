@@ -117,6 +117,12 @@ set -euo pipefail
 readonly SCRIPT_NAME="$(basename "${0}")"
 readonly SCRIPT_DIR="$(cd "$(dirname "${0}")" && pwd)"
 
+# ------------------------------------------------------------------------------
+# Function: show_usage
+# Purpose.: Display usage information
+# Returns.: 0
+# Output..: Usage information to stdout
+# ------------------------------------------------------------------------------
 show_usage() {
     cat <<EOF
 Usage: ${SCRIPT_NAME} [OPTIONS]
@@ -127,6 +133,11 @@ Options:
 EOF
 }
 
+# ------------------------------------------------------------------------------
+# Function: main
+# Purpose.: Main entry point for the script
+# Returns.: 0 on success, 1 on error
+# ------------------------------------------------------------------------------
 main() {
     # Check OraDBA environment
     if [[ -z "${ORADBA_BASE:-}" ]]; then
@@ -155,6 +166,36 @@ done
 
 main
 ```
+
+### Function Header Template
+
+All functions must include standardized headers:
+
+```bash
+# ------------------------------------------------------------------------------
+# Function: function_name
+# Purpose.: Brief description of what the function does
+# Args....: $1 - Description of first argument
+#           $2 - Description of second argument (optional)
+# Returns.: 0 on success, 1 on error
+# Output..: Description of what gets printed to stdout
+# Notes...: Additional context, usage examples, or warnings (optional)
+# ------------------------------------------------------------------------------
+function_name() {
+    local arg1="$1"
+    local arg2="${2:-default}"
+    
+    # Function implementation
+}
+```
+
+**Header Field Descriptions:**
+- `Function:` - Function name (required)
+- `Purpose.:` - Brief description (required)
+- `Args....:` - Arguments with descriptions, one per line (if applicable)
+- `Returns.:` - Return codes and their meanings (required)
+- `Output..:` - What is printed to stdout/stderr (if applicable)
+- `Notes...:` - Additional information, examples, warnings (optional)
 
 ### SQL Script Template
 

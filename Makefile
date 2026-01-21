@@ -63,6 +63,10 @@ help: ## Show this help message
 	@grep -E '^(version|tag|status).*:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-22s\033[0m %s\n", $$1, $$2}'
 	@echo ""
+	@echo -e "$(COLOR_BOLD)Checksums:$(COLOR_RESET)"
+	@grep -E '^checksum.*:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-22s\033[0m %s\n", $$1, $$2}'
+	@echo ""
 	@echo -e "$(COLOR_BOLD)CI/CD & Tools:$(COLOR_RESET)"
 	@grep -E '^(ci|pre-commit|tools|info).*:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-22s\033[0m %s\n", $$1, $$2}'
@@ -89,7 +93,12 @@ test: ## Run BATS tests
 		echo -e "$(COLOR_RED)Error: bats not found. Install with: brew install bats-core$(COLOR_RESET)"; \
 		exit 1; \
 	fi
-	@$(BATS) tests && echo -e "$(COLOR_GREEN)✓ Tests passed$(COLOR_RESET)" || (echo -e "$(COLOR_RED)✗ Tests failed$(COLOR_RESET)" && exit 1)
+	@if [ ! -d tests ] || [ -z "$$(find tests -name '*.bats' -type f 2>/dev/null)" ]; then \
+		echo -e "$(COLOR_YELLOW)Warning: No test files found in tests/ directory$(COLOR_RESET)"; \
+		echo -e "$(COLOR_GREEN)✓ Tests passed (no tests to run)$(COLOR_RESET)"; \
+	else \
+		$(BATS) tests && echo -e "$(COLOR_GREEN)✓ Tests passed$(COLOR_RESET)" || (echo -e "$(COLOR_RED)✗ Tests failed$(COLOR_RESET)" && exit 1); \
+	fi
 
 # ==============================================================================
 # Linting & Formatting
@@ -156,6 +165,28 @@ format-check: ## Check if scripts are formatted correctly
 	else \
 		echo -e "$(COLOR_YELLOW)Warning: shfmt not found$(COLOR_RESET)"; \
 	fi
+
+.PHONY: checksum-create
+checksum-create: ## Create initial checksum file
+	@echo -e "$(COLOR_BLUE)Creating checksum file...$(COLOR_RESET)"
+	@./scripts/checksum.sh create && echo -e "$(COLOR_GREEN)✓ Checksum file created$(COLOR_RESET)" || (echo -e "$(COLOR_RED)✗ Failed to create checksums$(COLOR_RESET)" && exit 1)
+
+.PHONY: checksum-update
+checksum-update: ## Update checksum file
+	@echo -e "$(COLOR_BLUE)Updating checksum file...$(COLOR_RESET)"
+	@./scripts/checksum.sh update && echo -e "$(COLOR_GREEN)✓ Checksum file updated$(COLOR_RESET)" || (echo -e "$(COLOR_RED)✗ Failed to update checksums$(COLOR_RESET)" && exit 1)
+
+.PHONY: checksum-verify
+checksum-verify: ## Verify file integrity against checksums
+	@echo -e "$(COLOR_BLUE)Verifying checksums...$(COLOR_RESET)"
+	@./scripts/checksum.sh verify && echo -e "$(COLOR_GREEN)✓ All files verified$(COLOR_RESET)" || (echo -e "$(COLOR_RED)✗ Verification failed$(COLOR_RESET)" && exit 1)
+
+.PHONY: checksum-list
+checksum-list: ## List files tracked by checksums
+	@./scripts/checksum.sh list
+
+.PHONY: checksum
+checksum: checksum-verify ## Alias for checksum-verify
 
 .PHONY: check
 check: lint test ## Run all checks (lint + test)
