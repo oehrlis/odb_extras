@@ -126,7 +126,7 @@ During development in the repository:
 ## Excluding Files from Checksums
 
 Some files should not be checksummed (logs, credentials, user configs).
-Edit [.checksumignore](../.checksumignore) to exclude patterns:
+Edit `.checksumignore` to exclude patterns:
 
 ```plaintext
 # Exclude log files
@@ -532,6 +532,6 @@ done
 
 ## See Also
 
-- [.checksumignore](../.checksumignore) - Exclusion patterns
-- [build.sh](../scripts/build.sh) - Build process with checksums
+- `.checksumignore` - Exclusion patterns (located in extension root)
+- `scripts/build.sh` - Build process with checksums
 - [GitHub Copilot Instructions](../.github/copilot-instructions.md) - Development standards and workflow
