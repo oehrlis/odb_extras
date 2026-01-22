@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-01-22
+
+### Fixed
+
+- Fixed broken documentation links in `doc/checksums.md`
+  - Corrected relative paths to `.checksumignore` (from `.checksumignore` to `../.checksumignore`)
+  - Replaced non-existent `development.md` link with proper reference to GitHub Copilot Instructions
+
 ## [0.1.0] - 2026-01-21
 
 ### Added
@@ -39,5 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shell script linting compliance (shellcheck)
 - Test framework to handle missing test files gracefully
 
-[Unreleased]: https://github.com/oehrlis/odb_extras/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/oehrlis/odb_extras/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/oehrlis/odb_extras/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/oehrlis/odb_extras/releases/tag/v0.1.0
