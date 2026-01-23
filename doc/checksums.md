@@ -534,4 +534,4 @@ done
 
 - `.checksumignore` - Exclusion patterns (located in extension root)
 - `scripts/build.sh` - Build process with checksums
-- [GitHub Copilot Instructions](../.github/copilot-instructions.md) - Development standards and workflow
+- GitHub Copilot Instructions - Development standards and workflow
