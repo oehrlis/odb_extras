@@ -1,5 +1,8 @@
 # OraDBA Extras Extension Documentation
 
+Current version: see [`../VERSION`](../VERSION) | [Release Notes](release_notes/)
+Latest release: [v0.2.0](release_notes/v0.2.0.md)
+
 ## Overview
 
 The OraDBA Extras extension provides shell wrappers and configurations for
@@ -74,3 +77,20 @@ echo '{"name":"test"}' | jq .name
 ## Documentation
 
 - [Checksum Management](checksums.md) - Managing file integrity and checksums
+- [Release Notes](release_notes/) - Version history and changes
+- [v0.2.0 Release Note](release_notes/v0.2.0.md) - Optional env/alias hook support
+
+## Extension Hooks (env/aliases)
+
+The extension includes optional hook files in `etc/`:
+
+- `etc/env.sh`
+- `etc/aliases.sh`
+
+By default these hooks are disabled in `.extension`:
+
+- `load_env: false`
+- `load_aliases: false`
+
+To enable them, set `ORADBA_EXTENSIONS_SOURCE_ETC=true` and change the
+corresponding `.extension` flags to `true`.

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-02-17
+
+### Added
+
+- Added explicit extension metadata flags in `.extension`:
+  - `load_env: false`
+  - `load_aliases: false`
+- Added optional OraDBA etc hook files:
+  - `etc/env.sh`
+  - `etc/aliases.sh`
+- Added documentation for extension env/alias hook behavior and enablement.
+
 ## [0.1.2] - 2026-01-22
 
 ### Fixed
@@ -56,7 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shell script linting compliance (shellcheck)
 - Test framework to handle missing test files gracefully
 
-[Unreleased]: https://github.com/oehrlis/odb_extras/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/oehrlis/odb_extras/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/oehrlis/odb_extras/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/oehrlis/odb_extras/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/oehrlis/odb_extras/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/oehrlis/odb_extras/releases/tag/v0.1.0

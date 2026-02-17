@@ -1,10 +1,12 @@
 name: odb_extras
-version: 0.1.2
+version: 0.2.0
 description: OraDBA extras extension for user-specific tools (gnu-tar, oci cli, jq, etc.)
 author: Stefan Oehrli (oes) stefan.oehrli@oradba.ch
 enabled: true
 priority: 60
 uses_oradba_libs: false
+load_env: false
+load_aliases: false
 provides:
   bin: true
   sql: false

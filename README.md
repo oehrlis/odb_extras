@@ -2,6 +2,9 @@
 
 OraDBA extension providing user-specific tools and utilities that are not available in the standard OS installation.
 
+**Version:** see [`VERSION`](VERSION) and [`doc/release_notes/`](doc/release_notes/)  
+**Latest Release:** [`v0.2.0`](doc/release_notes/v0.2.0.md)
+
 ## Overview
 
 This extension provides shell wrappers and configurations for various tools:
@@ -68,6 +71,23 @@ management for both users and developers.
 ## Configuration
 
 Configuration files can be placed in `etc/` directory. See individual tool documentation in `doc/` for details.
+
+## Extension Hooks (env/aliases)
+
+This extension supports optional OraDBA etc hook files:
+
+- `etc/env.sh`
+- `etc/aliases.sh`
+
+Current default in `.extension`:
+
+- `load_env: false`
+- `load_aliases: false`
+
+To enable hook sourcing, set both:
+
+1. Global switch `ORADBA_EXTENSIONS_SOURCE_ETC=true`
+2. Set `load_env: true` and/or `load_aliases: true` in `.extension`
 
 ## Requirements
 
